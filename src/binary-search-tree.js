@@ -55,8 +55,14 @@ class BinarySearchTree {
   has(data) {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
-    if (this.root === new Node(data)) {
+    if (this.root === data) {
       return true;
+    } else if (node.left > data ) {
+      return this.has(node.left, data);
+    } else if (node.right < data) {
+      return this.has(node.right, data);
+    } else {
+      return false;
     }
   }
 
@@ -64,22 +70,73 @@ class BinarySearchTree {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
 
-
+  if (node === null) {
+    return null;
+  } else if (data < node.data) {
+    return this.find(node.left, data);
+  } else if (data > node.data) {
+    return this.find(node.right, data);
+  } else {
+    return node;
+  }
   }
 
   remove(data) {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
+
+    this.root = this.removeNode(this.root, data);
   }
 
-  min() {
-    // throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeNode(node, data) {
+    if (node === null) {
+      return null;
+    } else if (data < node.data) {
+      node.left = this.removeNode(node.left, data);
+      return node;
+    } else if (data > node.data) {
+      node.right = this.removeNode(node.right, data);
+      return node;
+    } else {
+      if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+      }
+      if (node.left === null) {
+        node = node.right;
+        return node;
+      } else if (node.right === null) {
+        node = node.left;
+        return node;
+      }
+
+      let newNode = this.min(node.right);
+      node.data = newNode.data;
+      node.right = this.removeNode(node.right, newNode.data)
+      return node;
+    }
   }
 
-  max() {
+  min(node) {
     // throw new NotImplementedError('Not implemented');
     // remove line with error and write your code here
+
+    if (node.left === null) {
+      return node;
+    } else {
+      return this.min(node.left);
+    }
+  }
+
+  max(node) {
+    // throw new NotImplementedError('Not implemented');
+    // remove line with error and write your code here
+
+    if (node.right === null) {
+      return node;
+    } else {
+      return this.max(node.right);
+    }
   }
 }
 
