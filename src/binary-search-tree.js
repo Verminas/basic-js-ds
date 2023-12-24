@@ -16,11 +16,11 @@ class Node {
 
 class BinarySearchTree {
   constructor() {
-    this.rootNode = null; // Изменение имени переменной, чтобы избежать конфликта с методом root()
+    this.rootNode = null;
   }
 
   root() {
-    return this.rootNode; // Изменение имени переменной, чтобы избежать конфликта с методом root()
+    return this.rootNode;
   }
 
   add(data) {
@@ -49,7 +49,7 @@ class BinarySearchTree {
   }
 
   has(data) {
-    return this.find(data) !== null;
+    return this.findNode(this.rootNode, data) !== null;
   }
 
   find(data) {
@@ -94,27 +94,43 @@ class BinarySearchTree {
         return node;
       }
 
-      const newNode = this.min(node.right);
-      node.data = newNode.data;
-      node.right = this.removeNode(node.right, newNode.data);
+      const minRightNode = this.findMinNode(node.right);
+      node.data = minRightNode.data;
+      node.right = this.removeNode(node.right, minRightNode.data);
       return node;
     }
   }
 
-  min(node) {
+  findMinNode(node) {
     if (node.left === null) {
       return node;
     } else {
-      return this.min(node.left);
+      return this.findMinNode(node.left);
     }
   }
 
-  max(node) {
+  findMaxNode(node) {
     if (node.right === null) {
       return node;
     } else {
-      return this.max(node.right);
+      return this.findMaxNode(node.right);
     }
+  }
+
+  min() {
+    if (this.rootNode === null) {
+      return null;
+    }
+    const minNode = this.findMinNode(this.rootNode);
+    return minNode.data;
+  }
+
+  max() {
+    if (this.rootNode === null) {
+      return null;
+    }
+    const maxNode = this.findMaxNode(this.rootNode);
+    return maxNode.data;
   }
 }
 
