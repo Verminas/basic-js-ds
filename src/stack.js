@@ -14,35 +14,38 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 class Stack {
   constructor(array) {
-    this.array = array;
-    this.lastIndex = this.array.length - 1;
+    if (array !== undefined) {
+      this.array = array;
+      this.lastIndex = this.array.length - 1;
+    } else {
+      this.array = [];
+      this.lastIndex = -1;
+    }
   }
 
   push(element) {
-   // throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-    this.array[this.lastIndex + 1] = element;
+    this.lastIndex++;
+    this.array[this.lastIndex] = element;
   }
 
   pop() {
-    // throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-    if (this.array.length > 0) {
-      this.peek();
+    if (this.lastIndex >= 0) {
+      const poppedElement = this.array[this.lastIndex];
       this.array.splice(this.lastIndex, 1);
+      this.lastIndex--;
+      return poppedElement;
     } else {
       return undefined;
     }
   }
 
   peek() {
-    // throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-    return this.array[this.lastIndex], 1;
+    if (this.lastIndex >= 0) {
+      return this.array[this.lastIndex];
+    } else {
+      return undefined;
+    }
   }
-  // getLength() {
-  //   for (let i = 0; )
-  // }
 }
 
 module.exports = {
